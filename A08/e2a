@@ -1,0 +1,31 @@
+.eqv PRINT_STR, 4
+.eqv READ_INT, 5
+.eqv EXIT, 10
+.eqv PRINT_CHAR, 11
+.eqv PRINT_INT , 1
+
+.data
+minus : .asciiz "texto em minusculas"
+maius : .space 20
+#int i - $t3
+
+.text
+main:   la $a0, minus
+	la $a1, maius
+	li $t3, 0 #i=0
+ WHILE: addu 	$t4, $a0, $t3 # $t4 = $a0 + i
+ 	addu 	$t5, $a1, $t3 # $t4 = $a1 + i
+ 	lb 	$t0, 0($t4) 	
+ 	beqz 	$t0, DONE  #if $t0='\0'
+ 	addi 	$t1, $t0, -0x20
+ 	sb 	$t1, 0($t5)
+ 	addi 	$t3, $t3, 1
+ 	j WHILE
+  DONE: la $a0, maius
+	li $v0, PRINT_STR
+	syscall 	
+ 
+ 	li $v0, EXIT
+	syscall 	
+ 
+ 
